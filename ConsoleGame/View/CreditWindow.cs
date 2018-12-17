@@ -35,8 +35,6 @@ namespace ConsoleGame.View
 
             backButton = new Button(28 + 20, 10 + 14, 18, 3, "Back");
             backButton.SetActive();
-
-            Render();
         }
 
         public override void Render()

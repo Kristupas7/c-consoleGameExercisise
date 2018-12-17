@@ -9,22 +9,22 @@ namespace ConsoleGame.View
     {
 
         private Button startButton;
-        private Button creditsButton;
+        private Button creditButton;
         private Button quitButton;
         private TextBlock titleTextBlock;
+        private List<Button> buttons = new List<Button>(); 
 
         public GameWindow() : base(0, 0, 120, 30, '%')
         {
+            buttons.Add (new Button(20, 13, 18, 5, "Start"));
+            buttons[0].SetActive();
+
+
+            buttons.Add(new Button(50, 13, 18, 5, "Credits"));
+
+            buttons.Add (new Button(80, 13, 18, 5, "Quit"));
+
             titleTextBlock = new TextBlock(10, 5, 100, new List<String> { "Super duper zaidimas", "Vardas Pavardaitis kuryba!", "Made in Vilnius Coding School!" });
-
-            startButton = new Button(20, 13, 18, 5, "Start");
-            startButton.SetActive();
-
-            creditsButton = new Button(50, 13, 18, 5, "Credits");
-
-            quitButton = new Button(80, 13, 18, 5, "Quit");
-
-            Render();
         }
 
         public override void Render()
@@ -33,11 +33,54 @@ namespace ConsoleGame.View
 
             titleTextBlock.Render();
 
-            startButton.Render();
-            creditsButton.Render();
-            quitButton.Render();
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].Render();
+            }
 
             Console.SetCursorPosition(0, 0);
         }
+         public int ActiveButtonIndex()
+         {
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                if (buttons[i].IsActive())
+                {
+                    return i;
+                }
+            }
+            return 2;
+         }
+         public void SwitchActiveButtonsToRight()
+         {
+             for(int i = 0; i < buttons.Count; i++)
+             {
+                 if (buttons[i].IsActive())
+                 {
+                     if (i + 1 != buttons.Count)
+                     {
+                         buttons[i].SetInactive();
+                         buttons[i+1].SetActive();
+                         break;
+                     }
+                 }
+             }
+         }
+         public void SwitchActiveButtonsToLeft()
+         {
+             for (int i = 0; i < buttons.Count; i++)
+             {
+                 if (buttons[i].IsActive())
+                 {
+                     if (i != 0)
+                     {
+                         buttons[i].SetInactive();
+                         buttons[i - 1].SetActive();
+                         break;
+                     }
+                 }
+             }
+         }
     }
+     
 }
